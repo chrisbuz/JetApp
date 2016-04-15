@@ -1,0 +1,1023 @@
+  [1m[36m (7.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (6.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateIdeas (20150329191044)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "ideas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "author" varchar, "description" text, "valueProposition" text, "customerSegment" text, "marketSize" integer, "resources" text, "stage" varchar, "vision" text, "sector" varchar, "picture" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150329191044"]]
+  [1m[35m (4.8ms)[0m  commit transaction
+Migrating to DeviseCreateUsers (20150331010934)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+DEPRECATION WARNING: `#timestamp` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at C:/Users/buz92/Documents/Games/JetApp/jetapp/db/migrate/20150331010934_devise_create_users.rb:40)
+  [1m[35m (1.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "avatar" varchar, "firstName" varchar DEFAULT '' NOT NULL, "lastName" varchar DEFAULT '' NOT NULL, "profileName" varchar DEFAULT '' NOT NULL, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150331010934"]]
+  [1m[36m (5.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateComments (20150401191447)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "idea_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150401191447"]]
+  [1m[36m (5.8ms)[0m  [1mcommit transaction[0m
+Migrating to AddUserIdToComments (20150402194435)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.3ms)[0m  [1mALTER TABLE "comments" ADD "user_id" integer[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150402194435"]]
+  [1m[36m (6.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateStickies (20150415063112)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (2.0ms)[0m  [1mCREATE TABLE "stickies" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "idea_id" integer, "user_id" integer, "section" varchar, "stage" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150415063112"]]
+  [1m[36m (7.9ms)[0m  [1mcommit transaction[0m
+Migrating to CreateRoles (20150419023253)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150419023253"]]
+  [1m[36m (6.0ms)[0m  [1mcommit transaction[0m
+Migrating to AddRoleIdToUser (20150419023309)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "role_id" integer[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_users_on_role_id" ON "users" ("role_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150419023309"]]
+  [1m[35m (6.1ms)[0m  commit transaction
+Migrating to CreateActivities (20150419153101)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE "activities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "action" varchar, "targetable_id" integer, "targetable_type" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_activities_on_user_id" ON "activities" ("user_id")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_activities_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_activities_on_user_id' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1mCREATE  INDEX "index_activities_on_targetable_id_and_targetable_type" ON "activities" ("targetable_id", "targetable_type")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150419153101"]]
+  [1m[36m (7.5ms)[0m  [1mcommit transaction[0m
+Migrating to CreateUserFriendships (20150420033016)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "user_friendships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "friend_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.5ms)[0m  CREATE  INDEX "index_user_friendships_on_user_id_and_friend_id" ON "user_friendships" ("user_id", "friend_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150420033016"]]
+  [1m[35m (6.9ms)[0m  commit transaction
+Migrating to AddStateToUserFriendships (20150420203133)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "user_friendships" ADD "state" varchar
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_friendships_on_user_id_and_friend_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_friendships_on_user_id_and_friend_id' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  CREATE  INDEX "index_user_friendships_on_state" ON "user_friendships" ("state")
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150420203133"]]
+  [1m[35m (6.0ms)[0m  commit transaction
+Migrating to AddParentCommentIdToComments (20150422145235)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "comments" ADD "parent_comment_id" integer
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150422145235"]]
+  [1m[35m (5.9ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_activities_on_targetable_id_and_targetable_type' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_activities_on_targetable_id_and_targetable_type' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_activities_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_activities_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_friendships_on_state' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_friendships_on_state' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_friendships_on_user_id_and_friend_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_friendships_on_user_id_and_friend_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_role_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_role_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+
+
+Started GET "/" for ::1 at 2016-04-14 00:19:23 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (17.0ms)
+Completed 200 OK in 3858ms (Views: 3812.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/font-awesome.self-c15686cf2fcb329eed4be342c1410e6c4831c6b284a7e5a1fd0d3c2186f1b201.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/activities.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/bmc.self-01c280345e0ae8a99504f86c3acdf7a2be765dfe38fa1c56298844212abd47c8.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/comments_style.self-dd85d96ab2368be1fa9797ea579cab195e137d93b98491e8e5737bfe5e559392.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/materialize/bin/materialize.self-a6b81250b0b5dc56b47a8db400d351583221c73cd6bc2ae0b9dab9572b54c583.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/homepage.self-283a6bcc3b5b83efbc0037a355e5d1174e23d54e9c71a67468beb8e75df17b55.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/ideas.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/ideas_style.self-cfb9dc7f896d460e2e586be2add812c1b8c14c1fbda3dc5ae579e86edaf5c74a.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/profiles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/scaffolds.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/stickies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/user_friendships.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/welcome.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/welcomes.self-6c660daeb9ff464d7a7d4588ae282164b53d3017d87ca06a262b41eb01447c1f.css?body=1" for ::1 at 2016-04-14 00:19:27 -0500
+
+
+Started GET "/assets/application.self-ddca7e6b8a8504549208e5fa0f358d14c243de934e7b0a6a1d5a2384d5092f60.css?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/jquery/dist/jquery.self-0664d02dcbfb008e715c754b00b9af29d6f1796828c03610aee4265bdfc6afff.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/jquery.turbolinks.self-176b9819f30444d441e820bbccd3264fe57753aeafd54dec732b0dbc77129a2a.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/js-routes.self-cbb33e8fda632bfe151f92a51c93952c47461b53445c11ee9bddd424b46df9df.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/materialize/bin/materialize.self-4d1094f5ab4826aa67b9d6d93f9b753b2b87dc6b7aa8b11cd6e59c4d7637ae8f.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/turbolinks.self-3ad9a189e282f93d4e08b6b4af94c9dd70e5aaa8557b7704050a875ed67faf50.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/bmc.self-f12722346a6061ecaf56dc98db285bfa48139b178054d58a417b431e78e30966.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/activities.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/homepage.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/ideas.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/nav.self-a686b0a21e37e2c4db80cce2bde7347321ecba03d5b99121ad99640c3d7d0e35.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/npm.self-f66d504f2cd5bddaaade9c854b02828e5e46d225517ab9feebe1af2615566b1e.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/profiles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/stickies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/user_friendships.self-576dc1987d53447ad4bb181f03002b33aeb7dce28a021fd142b1969925c52f42.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/welcome.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/welcomes.self-6e3b2ec022328b534648866ef30c02fab9ef697289240ae2a57f05565bae8643.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/application.self-a0589cadc4e40388a59a5b19602d076924440929542ee374bd5cf867f9f31df8.js?body=1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/JetPack_Logo_White-c6370810b4386cc0912bbbe9753ce57c9e9e02aa7641682b864e3f149bb40041.png" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/fontawesome-webfont-d3ebb498192527b985939ae62cc4e5eb5c108efc1896184126b45d866868e73d.woff2?v=4.6.1" for ::1 at 2016-04-14 00:19:28 -0500
+
+
+Started GET "/assets/favicon-cd459fa8e0e4028fed64c9dbc5e438ee6026fc2f1bb4259416984e4fc28ce4f5.ico" for ::1 at 2016-04-14 00:19:29 -0500
+
+
+Started GET "/activities" for ::1 at 2016-04-14 00:19:31 -0500
+Processing by ActivitiesController#index as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:19:31 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (122.1ms)
+Completed 200 OK in 707ms (Views: 681.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:19:34 -0500
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 357ms (Views: 356.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/user_friendships" for ::1 at 2016-04-14 00:19:37 -0500
+Processing by UserFriendshipsController#index as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:19:37 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 518ms (Views: 517.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:19:40 -0500
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 370ms (Views: 369.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users" for ::1 at 2016-04-14 00:19:44 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"users"}
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:19:44 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 513ms (Views: 511.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:19:46 -0500
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 372ms (Views: 371.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users" for ::1 at 2016-04-14 00:19:48 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"users"}
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:19:48 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 518ms (Views: 517.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:20:06 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gtettkDYUZuzs8JX4/oKNBZnK0o2qZme4ZaXoeN5H1426tv+hmzn0s5lMJtyDt4zhYESeTewjBIjhorA9je6LA==", "user"=>{"login"=>"Christian.Buzombo@tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'christian.buzombo@tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 6ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gtettkDYUZuzs8JX4/oKNBZnK0o2qZme4ZaXoeN5H1426tv+hmzn0s5lMJtyDt4zhYESeTewjBIjhorA9je6LA==", "user"=>{"login"=>"Christian.Buzombo@tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 666ms (Views: 496.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for ::1 at 2016-04-14 00:20:08 -0500
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (5.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (291.7ms)
+Completed 200 OK in 842ms (Views: 841.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:20:09 -0500
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:20:38 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 473ms (Views: 472.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:20:50 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"txkjWZxVxdMjM/lAm9RYcq/Jo7aFLPqGfyO1a7bn0p8DJFURWuFzml7lC4wKIIx1PC+ahYQ17wq9M6gKo6l37Q==", "user"=>{"login"=>"chrisbuz@tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 4ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"txkjWZxVxdMjM/lAm9RYcq/Jo7aFLPqGfyO1a7bn0p8DJFURWuFzml7lC4wKIIx1PC+ahYQ17wq9M6gKo6l37Q==", "user"=>{"login"=>"chrisbuz@tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 583ms (Views: 501.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:01 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"MJJyI/bKVHGMvGV14jfxVB1EKRb7vE4nV8iQGZXwkTKErwRrMH7iOPFql7lzwyVTjqIQJfqlW6uV2I14gL40QA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 4ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"MJJyI/bKVHGMvGV14jfxVB1EKRb7vE4nV8iQGZXwkTKErwRrMH7iOPFql7lzwyVTjqIQJfqlW6uV2I14gL40QA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 584ms (Views: 505.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:06 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tKKCJswS2HyMMiur6vyUf/P5JF6L8LLa+jbcdCJ98ioAn/RuCqZuNfHk2Wd7CEB4YB8dbYrpp1Y4JsEVNzNXWA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 5ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tKKCJswS2HyMMiur6vyUf/P5JF6L8LLa+jbcdCJ98ioAn/RuCqZuNfHk2Wd7CEB4YB8dbYrpp1Y4JsEVNzNXWA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 584ms (Views: 503.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:12 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dlQdItp5LCP4eJP0ZtmX/4uQmUyqNW0ZoGMiEZ7drI/CaWtqHM2aaoWuYTj3LUP4GHagf6sseJVicz9wi5MJ/Q==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 5ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dlQdItp5LCP4eJP0ZtmX/4uQmUyqNW0ZoGMiEZ7drI/CaWtqHM2aaoWuYTj3LUP4GHagf6sseJVicz9wi5MJ/Q==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 593ms (Views: 511.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for ::1 at 2016-04-14 00:21:15 -0500
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (3.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (35.9ms)
+Completed 200 OK in 571ms (Views: 569.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:21:16 -0500
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:21:21 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 560ms (Views: 558.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:21:26 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 501ms (Views: 499.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:34 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"O3CC8UoeduthRXbKFc5ly82QbsqljTd3pWzJE6c9hh6PTfS5jKrAohyThAaEOrHMXnZX+aSUIvtnfNRysnMjbA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 4ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"O3CC8UoeduthRXbKFc5ly82QbsqljTd3pWzJE6c9hh6PTfS5jKrAohyThAaEOrHMXnZX+aSUIvtnfNRysnMjbA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 605ms (Views: 524.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:40 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Uetc67f0DW4q6CMQlJY0mRnzFqlfMeTfyrbPl+Hijubl1iqjcUC7J1c+0dwFYuCeihUvml4o8VMIptL29KwrlA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 4ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Uetc67f0DW4q6CMQlJY0mRnzFqlfMeTfyrbPl+Hijubl1iqjcUC7J1c+0dwFYuCeihUvml4o8VMIptL29KwrlA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 596ms (Views: 515.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:43 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dIanEOWUbr1cglOuZPUQXCnSUFm5NX7PbIHQEHGfuN/Au9FYIyDY9CFUoWL1AcRbujRpargsa0Oukc1xZNEdrQ==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 5ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dIanEOWUbr1cglOuZPUQXCnSUFm5NX7PbIHQEHGfuN/Au9FYIyDY9CFUoWL1AcRbujRpargsa0Oukc1xZNEdrQ==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 568ms (Views: 487.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:47 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"pVfE9vI0vbhBungQ/5g3rxP46iNYgJj15/LFVPxTjNIRarK+NIAL8TxsitxubOOogB7TEFmZjXkl4tg16R0poA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 4ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"pVfE9vI0vbhBungQ/5g3rxP46iNYgJj15/LFVPxTjNIRarK+NIAL8TxsitxubOOogB7TEFmZjXkl4tg16R0poA==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 580ms (Views: 500.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:21:52 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UOCfA8MgUDE3a8fXKYp5F8UfhVP+Xxlh4NQV8g15g6bk3elLBZTmeEq9NRu4fq0QVvm8YP9GDO0ixAiTGDcm1A==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 6ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UOCfA8MgUDE3a8fXKYp5F8UfhVP+Xxlh4NQV8g15g6bk3elLBZTmeEq9NRu4fq0QVvm8YP9GDO0ixAiTGDcm1A==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 628ms (Views: 543.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for ::1 at 2016-04-14 00:21:54 -0500
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (40.5ms)
+Completed 200 OK in 573ms (Views: 572.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:21:55 -0500
+
+
+Started POST "/users" for ::1 at 2016-04-14 00:21:57 -0500
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"5jtF8Dzheawgl6sP8S/WnrKBLTCjnacRxGJ5sI+3ithSBjO4+lXP5V1BWcNg2wKZIWcUA6KEsp0GcmTRmvkvqg==", "user"=>{"firstName"=>"", "lastName"=>"", "profileName"=>"", "email"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "avatar_cache"=>""}, "commit"=>"Sign up"}
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."profileName") = LOWER('') LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (38.5ms)
+Completed 200 OK in 1029ms (Views: 575.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:21:59 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:21:59 -0500
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 339ms (Views: 337.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:22:01 -0500
+
+
+Started POST "/users" for ::1 at 2016-04-14 00:22:07 -0500
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Ja10PWbrpd8qLZtP6B0E/+j7e3Ar9jORbLeBIDfK+7KRkAJ1oF8Tllf7aYN56dD4ex1CQyrvJh2up5xBIoRewA==", "user"=>{"firstName"=>"", "lastName"=>"", "profileName"=>"", "email"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "avatar_cache"=>""}, "commit"=>"Sign up"}
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."profileName") = LOWER('') LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (38.8ms)
+Completed 200 OK in 926ms (Views: 564.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:22:08 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:22:10 -0500
+Processing by HomepageController#index as HTML
+  Rendered homepage/index.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 310ms (Views: 309.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:22:12 -0500
+Processing by IdeasController#showAll as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for ::1 at 2016-04-14 00:22:12 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 499ms (Views: 498.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2016-04-14 00:22:21 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2+colY8CTbrjsf5uo5fVMM4uRmReiugD6wq1XEzS1GRv2l7dSbb7855nDKIyYwE3Xch/V1+T/Y8pGqg9WZxxFg==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE (lower(email) = 'chrisbuz@email.tamu.edu')  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2+colY8CTbrjsf5uo5fVMM4uRmReiugD6wq1XEzS1GRv2l7dSbb7855nDKIyYwE3Xch/V1+T/Y8pGqg9WZxxFg==", "user"=>{"login"=>"chrisbuz@email.tamu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 610ms (Views: 528.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for ::1 at 2016-04-14 00:22:22 -0500
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (3.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (42.9ms)
+Completed 200 OK in 585ms (Views: 583.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:22:23 -0500
+
+
+Started POST "/users" for ::1 at 2016-04-14 00:22:43 -0500
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xjRDycX8ElajjJqsJ5ORw4jPd8frA8tboAjcwCpHrG9yCTWBA0ikH95aaGC2Z0XEGylO9Ooa3tdiGMGhPwkJHQ==", "user"=>{"firstName"=>"Christian", "lastName"=>"Buzombo", "profileName"=>"chrisbuz", "email"=>"360chris@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "avatar_cache"=>""}, "commit"=>"Sign up"}
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = '360chris@gmail.com' LIMIT 1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."profileName") = LOWER('chrisbuz') LIMIT 1[0m
+  [1m[35mRole Load (0.0ms)[0m  SELECT  "roles".* FROM "roles" WHERE "roles"."name" = ? LIMIT 1  [["name", "registered"]]
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("firstName", "lastName", "profileName", "email", "encrypted_password", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["firstName", "Christian"], ["lastName", "Buzombo"], ["profileName", "chrisbuz"], ["email", "360chris@gmail.com"], ["encrypted_password", "$2a$10$hEr8d2a5wCmnawOuwRxi0uXA/77mYjBYTASXErhlkflDCNjJ9V0X."], ["created_at", "2016-04-14 05:22:43.355470"], ["updated_at", "2016-04-14 05:22:43.355470"]]
+  [1m[35m (6.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (3.3ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?  [["last_sign_in_at", "2016-04-14 05:22:43.473063"], ["current_sign_in_at", "2016-04-14 05:22:43.473063"], ["last_sign_in_ip", "::1"], ["current_sign_in_ip", "::1"], ["sign_in_count", 1], ["updated_at", "2016-04-14 05:22:43.475064"], ["id", 1]]
+  [1m[36m (4.9ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/homepage/index
+Completed 302 Found in 577ms (ActiveRecord: 16.2ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:22:43 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 316ms (Views: 315.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/thumb_default-c89506263cffcf5c6b29d34d6babea9a43027a94a902607fd47d68d805ae8efb.jpg" for ::1 at 2016-04-14 00:22:44 -0500
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:22:47 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1  [["profileName", "chrisbuz"]]
+  [1m[36m (1.0ms)[0m  [1mSELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?[0m  [["user_id", 1], ["friend_id", 1]]
+  [1m[35mIdea Load (0.0ms)[0m  SELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0  [["author", "chrisbuz"]]
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?[0m  [["author", "chrisbuz"]]
+  [1m[35mUserFriendship Load (0.0ms)[0m  SELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (52.5ms)
+Completed 200 OK in 485ms (Views: 397.8ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/small_default-37e64f3312e4027b7246d23756bed5d82644d379efe4487b3c46006b10b9514f.jpg" for ::1 at 2016-04-14 00:22:47 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:22:51 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 413ms (Views: 412.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:22:52 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mIdea Load (0.0ms)[0m  [1mSELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0[0m
+  Rendered ideas/showAll.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 347ms (Views: 343.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:22:53 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 366ms (Views: 365.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/activities" for ::1 at 2016-04-14 00:22:55 -0500
+Processing by ActivitiesController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users" INNER JOIN "user_friendships" ON "users"."id" = "user_friendships"."friend_id" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."state" = ?  [["user_id", 1], ["state", "accepted"]]
+  [1m[36mActivity Load (0.5ms)[0m  [1mSELECT "activities".* FROM "activities" WHERE (user_id in (1))  ORDER BY created_at desc[0m
+  Rendered activities/index.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 392ms (Views: 342.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:22:58 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 337ms (Views: 335.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:22:59 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mIdea Load (0.0ms)[0m  SELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0
+  Rendered ideas/showAll.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 327ms (Views: 322.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:00 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 339ms (Views: 338.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:23:02 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mIdea Load (0.5ms)[0m  [1mSELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0[0m
+  Rendered ideas/showAll.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 327ms (Views: 322.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:03 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 340ms (Views: 339.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/user_friendships" for ::1 at 2016-04-14 00:23:04 -0500
+Processing by UserFriendshipsController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUserFriendship Load (0.5ms)[0m  SELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?  [["user_id", 1]]
+  Rendered user_friendships/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 340ms (Views: 334.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:06 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 346ms (Views: 345.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:23:07 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mIdea Load (0.0ms)[0m  [1mSELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0[0m
+  Rendered ideas/showAll.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 353ms (Views: 348.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:09 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 341ms (Views: 340.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:23:11 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1  [["profileName", "chrisbuz"]]
+  [1m[36m (0.0ms)[0m  [1mSELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?[0m  [["user_id", 1], ["friend_id", 1]]
+  [1m[35mIdea Load (0.0ms)[0m  SELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0  [["author", "chrisbuz"]]
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?[0m  [["author", "chrisbuz"]]
+  [1m[35mUserFriendship Load (0.0ms)[0m  SELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (39.5ms)
+Completed 200 OK in 388ms (Views: 377.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:13 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 326ms (Views: 324.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:23:15 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1[0m  [["profileName", "chrisbuz"]]
+  [1m[35m (0.5ms)[0m  SELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?  [["user_id", 1], ["friend_id", 1]]
+  [1m[36mIdea Load (0.0ms)[0m  [1mSELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0[0m  [["author", "chrisbuz"]]
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?  [["author", "chrisbuz"]]
+  [1m[36mUserFriendship Load (0.0ms)[0m  [1mSELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (38.1ms)
+Completed 200 OK in 367ms (Views: 356.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users/edit" for ::1 at 2016-04-14 00:23:17 -0500
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered devise/registrations/edit.html.erb within layouts/application (15.5ms)
+Completed 200 OK in 594ms (Views: 589.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/medium_default-300334d02975382a13b294e8cd0243434dd4a81d1e3132456035d33c98447d82.jpg" for ::1 at 2016-04-14 00:23:18 -0500
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:23:18 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:22 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 344ms (Views: 343.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:23:24 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mIdea Load (0.5ms)[0m  [1mSELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0[0m
+  Rendered ideas/showAll.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 328ms (Views: 323.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:23:26 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 341ms (Views: 340.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:23:27 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mIdea Load (0.5ms)[0m  SELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0
+  Rendered ideas/showAll.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 340ms (Views: 334.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/ideas/new" for ::1 at 2016-04-14 00:23:29 -0500
+Processing by IdeasController#newIdea as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered ideas/newIdea.html.erb within layouts/application (35.1ms)
+Completed 200 OK in 385ms (Views: 372.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Regular.woff2" for ::1 at 2016-04-14 00:24:07 -0500
+
+
+Started POST "/ideas/add" for ::1 at 2016-04-14 00:25:11 -0500
+Processing by IdeasController#add as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"GxektcLdHUIzEjZXLmWR4KDMj4OXmQdC1AYMwjRCqQ2vKtL9BGmrC07ExJu/kUXnMyq2sJaAEs4WFhGjIQwMfw==", "idea"=>{"name"=>"Enhancements", "valueProposition"=>"Adds Value", "picture"=>#<ActionDispatch::Http::UploadedFile:0xaf8d560 @tempfile=#<Tempfile:C:/Users/buz92/AppData/Local/Temp/RackMultipart20160414-1972-afq3a4.jpg>, @original_filename="sample.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"idea[picture]\"; filename=\"sample.jpg\"\r\nContent-Type: image/jpeg\r\n">, "description"=>"To increase productivity", "customerSegment"=>"Not alot, at all.", "vision"=>"To be better", "sector"=>"Technology"}, "commit"=>"Add Idea"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (7.4ms)[0m  INSERT INTO "ideas" ("name", "author", "valueProposition", "customerSegment", "vision", "sector", "description", "picture", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "Enhancements"], ["author", "chrisbuz"], ["valueProposition", "Adds Value"], ["customerSegment", "Not alot, at all."], ["vision", "To be better"], ["sector", "Technology"], ["description", "To increase productivity"], ["picture", "sample.jpg"], ["created_at", "2016-04-14 05:25:12.389930"], ["updated_at", "2016-04-14 05:25:12.389930"]]
+  [1m[36m (6.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.5ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "activities" ("user_id", "targetable_id", "targetable_type", "action", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 1], ["targetable_id", 1], ["targetable_type", "Idea"], ["action", "created"], ["created_at", "2016-04-14 05:25:12.476883"], ["updated_at", "2016-04-14 05:25:12.476883"]]
+  [1m[35m (5.0ms)[0m  commit transaction
+Redirected to http://localhost:3000/ideas/showAll
+Completed 302 Found in 741ms (ActiveRecord: 20.8ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:25:12 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mIdea Load (0.5ms)[0m  SELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "ideas"[0m
+  Rendered ideas/showAll.html.erb within layouts/application (37.3ms)
+Completed 200 OK in 361ms (Views: 356.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Bold.woff2" for ::1 at 2016-04-14 00:25:12 -0500
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Medium.woff2" for ::1 at 2016-04-14 00:25:16 -0500
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:25:27 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1[0m  [["profileName", "chrisbuz"]]
+  [1m[35m (0.0ms)[0m  SELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?  [["user_id", 1], ["friend_id", 1]]
+  [1m[36mIdea Load (0.5ms)[0m  [1mSELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0[0m  [["author", "chrisbuz"]]
+  [1m[35m (0.5ms)[0m  SELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?  [["author", "chrisbuz"]]
+  [1m[36mUserFriendship Load (0.0ms)[0m  [1mSELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (42.5ms)
+Completed 200 OK in 431ms (Views: 419.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/edit" for ::1 at 2016-04-14 00:25:29 -0500
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered devise/registrations/edit.html.erb within layouts/application (16.0ms)
+Completed 200 OK in 608ms (Views: 604.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:25:29 -0500
+
+
+Started PATCH "/users" for ::1 at 2016-04-14 00:25:34 -0500
+Processing by Devise::RegistrationsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qVsfZEpUVg/aRg5twJCevfhctY0hVeCTkwHsSyi0tOcdZmksjODgRqeQ/KFRZEq6a7qMviBM9R9REfEqPfoRlQ==", "user"=>{"avatar"=>#<ActionDispatch::Http::UploadedFile:0xb12be18 @tempfile=#<Tempfile:C:/Users/buz92/AppData/Local/Temp/RackMultipart20160414-1972-18zkyxv.jpg>, @original_filename="sample.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"user[avatar]\"; filename=\"sample.jpg\"\r\nContent-Type: image/jpeg\r\n">, "avatar_cache"=>"", "firstName"=>"Christian", "lastName"=>"Buzombo", "profileName"=>"chrisbuz", "email"=>"360chris@gmail.com", "password"=>"[FILTERED]", "confirmation"=>"", "current_password"=>"[FILTERED]"}, "commit"=>"Update"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+Unpermitted parameter: confirmation
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE (LOWER("users"."profileName") = LOWER('chrisbuz') AND "users"."id" != 1) LIMIT 1[0m
+  Rendered devise/registrations/edit.html.erb within layouts/application (16.0ms)
+Completed 200 OK in 1767ms (Views: 537.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:25:36 -0500
+
+
+Started PATCH "/users" for ::1 at 2016-04-14 00:25:59 -0500
+Processing by Devise::RegistrationsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"TC3G9u3W3yTErmkIF9Vrozkj6pWs4wLWIL8bkroeuf34ELC+K2Jpbbl4m8SGIb+kqsXTpq36F1rirwbzr1Acjw==", "user"=>{"avatar"=>#<ActionDispatch::Http::UploadedFile:0x985daa8 @tempfile=#<Tempfile:C:/Users/buz92/AppData/Local/Temp/RackMultipart20160414-1972-1regili.jpg>, @original_filename="sample.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"user[avatar]\"; filename=\"sample.jpg\"\r\nContent-Type: image/jpeg\r\n">, "avatar_cache"=>"1460611534-1972-0002-4663/sample.jpg", "firstName"=>"Christian", "lastName"=>"Buzombo", "profileName"=>"chrisbuz", "email"=>"360chris@gmail.com", "password"=>"[FILTERED]", "confirmation"=>"", "current_password"=>"[FILTERED]"}, "commit"=>"Update"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+Unpermitted parameter: confirmation
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE (LOWER("users"."profileName") = LOWER('chrisbuz') AND "users"."id" != 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mSQL (8.3ms)[0m  [1mUPDATE "users" SET "avatar" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["avatar", "sample.jpg"], ["updated_at", "2016-04-14 05:26:00.459077"], ["id", 1]]
+  [1m[35m (6.0ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 1032ms (ActiveRecord: 15.8ms)
+
+
+Started GET "/" for ::1 at 2016-04-14 00:26:00 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 329ms (Views: 328.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:07 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 349ms (Views: 348.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:09 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 329ms (Views: 328.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/new" for ::1 at 2016-04-14 00:26:10 -0500
+Processing by IdeasController#newIdea as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered ideas/newIdea.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 332ms (Views: 327.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Light.woff2" for ::1 at 2016-04-14 00:26:11 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:13 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 346ms (Views: 345.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/homepage/" for ::1 at 2016-04-14 00:26:17 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"homepage"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1[0m  [["profileName", "homepage"]]
+Completed 500 Internal Server Error in 6ms
+
+NoMethodError (undefined method `id' for nil:NilClass):
+  app/controllers/profiles_controller.rb:5:in `showProfile'
+
+
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (1302.8ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (1195.9ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (2761.2ms)
+
+
+Started GET "/" for ::1 at 2016-04-14 00:26:22 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 331ms (Views: 330.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:26:25 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1  [["profileName", "chrisbuz"]]
+  [1m[36m (0.0ms)[0m  [1mSELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?[0m  [["user_id", 1], ["friend_id", 1]]
+  [1m[35mIdea Load (0.5ms)[0m  SELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0  [["author", "chrisbuz"]]
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?[0m  [["author", "chrisbuz"]]
+  [1m[35mUserFriendship Load (0.5ms)[0m  SELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (38.5ms)
+Completed 200 OK in 379ms (Views: 365.2ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:38 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 355ms (Views: 354.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ideas/showAll" for ::1 at 2016-04-14 00:26:41 -0500
+Processing by IdeasController#showAll as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mIdea Load (0.0ms)[0m  [1mSELECT  "ideas".* FROM "ideas" LIMIT 12 OFFSET 0[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "ideas"
+  Rendered ideas/showAll.html.erb within layouts/application (32.9ms)
+Completed 200 OK in 367ms (Views: 363.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Bold.woff2" for ::1 at 2016-04-14 00:26:42 -0500
+
+
+Started GET "/assets/materialize/font/roboto/Roboto-Medium.woff2" for ::1 at 2016-04-14 00:26:43 -0500
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:45 -0500
+Processing by HomepageController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 360ms (Views: 359.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/chrisbuz" for ::1 at 2016-04-14 00:26:47 -0500
+Processing by ProfilesController#showProfile as HTML
+  Parameters: {"id"=>"chrisbuz"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."profileName" = ? LIMIT 1[0m  [["profileName", "chrisbuz"]]
+  [1m[35m (0.5ms)[0m  SELECT "user_friendships"."id" FROM "user_friendships" WHERE "user_friendships"."user_id" = ? AND "user_friendships"."friend_id" = ?  [["user_id", 1], ["friend_id", 1]]
+  [1m[36mIdea Load (0.0ms)[0m  [1mSELECT  "ideas".* FROM "ideas" WHERE "ideas"."author" = ? LIMIT 6 OFFSET 0[0m  [["author", "chrisbuz"]]
+  [1m[35m (0.5ms)[0m  SELECT COUNT(*) FROM "ideas" WHERE "ideas"."author" = ?  [["author", "chrisbuz"]]
+  [1m[36mUserFriendship Load (0.0ms)[0m  [1mSELECT "user_friendships".* FROM "user_friendships" WHERE "user_friendships"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered profiles/showProfile.html.erb within layouts/application (39.5ms)
+Completed 200 OK in 404ms (Views: 393.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/homepage/index" for ::1 at 2016-04-14 00:26:49 -0500
+Processing by HomepageController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered homepage/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 348ms (Views: 347.3ms | ActiveRecord: 0.0ms)

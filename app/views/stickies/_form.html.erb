@@ -1,0 +1,26 @@
+<%= form_for(@sticky) do |f| %>
+
+  <% if @sticky.errors.any? %>
+    <div id="error_explanation">
+      <h5><%= pluralize(@sticky.errors.count, "error") %> prohibited this sticky from being saved:</h5>
+      <ul>
+        <% @sticky.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <!-- <%= f.label :'New Hypothesis' %><br> -->
+    <%= f.text_area :body, :class => "commentBodyEnter materialize-textarea", :length =>"120"%>
+  </div>
+  <div class="input-field  field col s12">
+    <%= f.select :section, Sticky::SECTIONS, {}, {class: 'browser-default'}%>
+  </div>
+  <%= f.hidden_field :idea_id %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <div class="actions">
+    <%= f.submit "Add Hypothesis", class: "modal-action modal-close btn-flat addHypothesis right"%>
+  </div>
+<% end %>

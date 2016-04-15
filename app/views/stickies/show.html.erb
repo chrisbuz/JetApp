@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @sticky.body %>
+</p>
+
+<p>
+  <strong>Idea_ID:</strong>
+  <%= @sticky.idea_id %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @sticky.user_id %>
+</p>
+
+<p>
+  <strong>Section:</strong>
+  <%= @sticky.section %>
+</p>
+
+<p>
+  <strong>Stage:</strong>
+  <%= @sticky.stage %>
+</p>
+
+<%= link_to 'Edit', edit_sticky_path(@sticky) %> |
+<%= link_to 'Back', stickies_path %>

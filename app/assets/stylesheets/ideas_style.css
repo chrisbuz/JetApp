@@ -1,0 +1,133 @@
+body {
+	/*background: url(http://subtlepatterns.com/patterns/scribble_light.png) ;*/
+}
+.wrapper{
+	/*USED TO OFFSET NAVBAR*/
+/*	margin-top: 30px;*/ 
+ width:100%;
+}
+.pagination_links{
+	width:200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.smallBtn{
+	margin-left: -5px;
+	margin-right: -5px;
+}
+.bodyContainer{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.navFix{
+	margin-left: 30px;
+}
+.card-body{
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+}
+.card-img-footer{
+	position: absolute;
+	bottom:0;
+	padding-bottom: 10px;
+	width:100%;
+	padding-right: 20px;
+}
+.card-footer{
+	position: absolute;
+	bottom:0;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	width:100%;
+}
+
+.caption{
+	margin-top: -5px;
+}
+.cardContainer{
+	/*height:400px;*/
+	width:100%;
+	/*overflow: hidden;*/
+}
+.deleteItem{
+	margin-top: 0px;
+}
+.deleteButton{
+	margin-top: -45px;
+	margin-right: 5px;
+}
+.thumbnail img { 
+	max-height:200px; 
+	height:100%; 
+	min-width: 125px;
+}
+.idea-thumbail-img{
+	height:250px;
+}
+.addIdeaBtn{
+}
+.ideaImage{
+	padding-top: 25px;
+	padding-bottom: 10px;
+	width:100%;
+	min-height: 150px;
+	max-width: 500px;
+	max-height: 400px;
+}
+.childElement{
+	margin-top: -7px;
+	margin-left: 20px;
+	padding-bottom: 15px;
+}
+nav{
+	margin-top: -1px;
+	min-height: 100px;
+	background-color: #4285F5; 
+}
+.noPicUpload{
+	text-align: center;
+}
+.noDocDisplay{
+	text-align: center;
+}
+.bigIcon{
+	font-size: 200px;
+}
+.fa-sm{
+	font-size: 18px;
+}
+/*NEED TO FIX FOR MOBILE*/
+/*HIDE AND SHOW OFF HOVER OF MOUSE: DO NOT TOUCH*/
+.showOnHover{
+  display: none;
+  /*display: inline;*/
+}
+.showHide:hover .showOnHover {
+  display: inline;
+}
+.profilePic{
+	height:60px;
+}
+.inLine{
+}
+.thumbnail {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border .2s ease-in-out;
+       -o-transition: border .2s ease-in-out;
+          transition: border .2s ease-in-out;
+}
+
+.backIcon{
+	font-size: 48px;
+	margin-top: -50px;
+	margin-left: -50px;
+}

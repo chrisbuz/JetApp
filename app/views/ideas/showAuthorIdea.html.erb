@@ -1,0 +1,116 @@
+<!-- Flashes are used to show the errors on the screen. These are linked with the ideas_controller as well-->
+<div class="row">
+  <% @user_idea.each do |ideaItem| %>
+		<% if ideaItem.present?%>
+	  <div class="col s12 m6 l3">
+
+    	<% if ideaItem.picture.present?%>
+    	<!-- IF THE IDEA HAS A PICTURE -->
+    		<div class="card card-picture small showHide hoverDepth ">
+	        <div class="card-image waves-effect waves-block waves-light <%= ideaCardColor(ideaItem.sector) -%>">
+	          <%= image_tag(ideaItem.picture_url, :class => "activator") %>
+	        </div>
+	        <div class="card-content">
+	          <span class="card-title grey-text text-darken-4">
+		          <h5 class="truncate">
+		            <%= link_to showIdea_path(ideaItem.id) do%>
+			          	<%= ideaItem.name%>
+			          <%end %>
+			          <i class="fa fa-angle-up activator right"></i>
+			        </h5>
+	          </span>
+	          <div class="card-author childElement truncate">
+	          	<%= ideaItem.author%>
+	          </div>
+	          <div class="card-img-footer showOnHover">
+	          	<%= link_to showIdea_path(ideaItem.id), :class=>"waves-effect waves-red btn-flat right" do%>
+	        			<i class="fa fa-trash-o"></i>
+	        		<%end%>
+	        		<%= link_to showBMC_path(ideaItem.id), :class=>"waves-effect waves-red btn-flat right" do%>
+	    					<i class="fa fa-calendar"></i>
+	    				<%end%>
+		          <%= link_to showIdea_path(ideaItem.id), :class=>"waves-effect waves-red btn-flat right smallBtn" do%>
+		        		<i class="fa fa-eye"></i>
+		        	<%end%>
+	        	</div>
+	        </div>
+	        <div class="card-reveal">
+	          <span class="card-title grey-text text-darken-4 truncate">
+	          	<%= ideaItem.name%> <i class="fa fa-angle-down right"></i>
+	          </span>
+	          <h6 class="truncate"><%=ideaItem.valueProposition%></h6>
+          	<h6 class="truncate"><strong>Customer:</strong> <%=ideaItem.customerSegment%></h6>
+          	<strong>Description:</strong><h6 class=""> <%=ideaItem.description%></h6>
+	        </div>
+	      </div>
+    	<%else%>
+    		<!-- IF IDEA HAS NO IMAGE -->
+        <div class="card small showHide hoverDepth <%= ideaCardColor(ideaItem.sector) -%>">
+          <div class=" white-black ">
+          	<div class="card-body">
+              <span class="card-title grey-text text-darken-4">	
+	              <%= link_to showIdea_path(ideaItem.id) do%>
+			        		<h5 class="truncate"><%= ideaItem.name%></h5>
+			        	<%end%>
+              </span>
+              <div class="card-author childElement truncate">
+	          		<%= ideaItem.author%>
+	          	</div>
+		          <h6 class="truncate"><%=ideaItem.valueProposition%></h6>
+          		<h6 class="truncate"><strong>Customer:</strong> <%=ideaItem.customerSegment%></h6>
+          		<h6 class="truncate"><strong>Description:</strong> <%=ideaItem.description%></h6>
+        		</div>
+        		<div class="card-footer showOnHover">
+        			<%= link_to delete_path(ideaItem.id), method: :delete, data: { confirm: 'Are you sure?' }, :class=>"waves-effect waves-red btn-flat right smallBtn" do%>
+	        			<i class="fa fa-trash-o"></i>
+	        		<%end%>
+	        		<%= link_to showBMC_path(ideaItem.id), :class=>"waves-effect waves-red btn-flat right" do%>
+	    					<i class="fa fa-calendar"></i>
+	    				<%end%>
+	        		<%= link_to showIdea_path(ideaItem.id), :class=>"waves-effect waves-red btn-flat right smallBtn" do%>
+		        		<i class="fa fa-eye"></i>
+		        	<%end%>
+          	</div>
+          </div>
+        </div>
+    	<%end%>
+    </div>
+    	
+
+    <%else%>
+    	<div class="row">
+        <div class="col s12 m6 l3 noIdeaCard">
+	        <div class="card red lighten-3 center">
+	          <div class="card-content black-text">
+	            <span class="card-title black-text">You have no ideas :(</span>
+	            <p>There are currently no ideas. Go add one with the link below!</p>
+	          </div>
+	          <div class="card-action red lighten-1">
+	          	<%= link_to'/ideas/new', :class=>"white-text" do %>
+	            	<i class="fa fa-pencil-square-o"></i> Create Idea
+	            <% end %>
+	          </div>
+	        </div>
+	      </div>
+      </div>
+    <%end%>
+  <% end %>
+</div>
+
+
+<!-- FROM THE kaminari GEM -->
+<div class="row">
+ 	<div class="col s12">
+		<div class="pagination_links">
+	    <%= paginate @user_idea, :pagination_class => "pagination-medium pagination-centered", :container => false %>
+	  </div>
+	</div>
+</div>
+<div class="row">
+	<div class="col s12">
+	  <div class="page_info center">
+	    <%= page_entries_info @user_idea %>
+	  </div>
+ 	</div>
+</div>
+

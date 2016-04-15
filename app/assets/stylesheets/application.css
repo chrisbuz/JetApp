@@ -1,0 +1,64 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require materialize
+ *= require font-awesome
+ *= require_tree .
+ *= require_self
+ */
+
+@import url(http://fonts.googleapis.com/css?family=Raleway:200,300);
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
+
+html, body {
+	height: 100%;
+	font-family: 'Roboto'; font-weight: 300;
+	/*background-color:#332c2c ;*/
+}
+nav {
+	width: 100%; 
+}
+
+h1, h2, h3, h4{
+	font-family: 'Raleway'; font-weight: 200;
+}
+h5, h6{
+	font-family: 'Raleway'; font-weight: 300;
+}
+
+.avatarThumb{
+	margin-top: 23px;
+}
+.profileName{
+	padding-bottom: 13px;
+}
+
+.bodyContainer {
+	min-height: 100%;	
+	margin-top: 0px;
+	height: 100%;
+	margin-top: 30px;
+}
+
+/*.wrapper{
+	min-height: 100%;
+    margin: 0 auto -235px; 
+}*/
+/*
+footer, .push {
+ 	width: 100%;
+ 	height: 235px; 
+}*/
+
+a {
+	color: black;
+}
